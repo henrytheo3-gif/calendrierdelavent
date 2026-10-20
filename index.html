@@ -107,8 +107,58 @@ h1 {
 .card-number {
   position: relative; z-index: 1; display: grid; place-items: center;
   width: 53px; height: 53px; border-radius: 50%; border: 1px solid var(--gold);
-  background: #211b35e8; color: var(--gold); font: 700 1.45rem "Cinzel
-  .gift {
+  background: #211b35e8; color: var(--gold); font: 700 1.45rem "Cinzel", serif;
+  box-shadow: 0 0 14px #f3d99422;
+}
+.card-icon { position: absolute; z-index: 2; top: 9px; right: 10px; font-size: .9rem; }
+.card-art { font-size: 1.35rem; margin-top: 2px; filter: drop-shadow(0 2px 4px #0004); }
+.card-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.card.solved { background: linear-gradient(145deg, #234438, #162b23); border-color: #9de0bc; }
+.card.solved .card-number { border-color: #9de0bc; color: #9de0bc; }
+
+.bottom-note { text-align: center; margin: 48px 0 24px; color: var(--muted); font-size: .9rem; font-family: "Playfair Display", serif; line-height: 1.8; }
+.bottom-note .paw { letter-spacing: .5em; margin: 6px 0; font-size: .8rem; }
+.footer-line { font-size: .75rem; color: #a89bb8; font-family: "DM Sans", sans-serif; margin-top: 8px; }
+
+/* Modale / Grimoire */
+.overlay {
+  position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center;
+  padding: 16px; background: #0b0c19df; backdrop-filter: blur(10px); overflow-y: auto;
+}
+.overlay.active { display: flex; }
+.modal {
+  position: relative; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto;
+  padding: 38px 28px 30px; text-align: center; border: 1.5px solid var(--gold);
+  border-radius: 24px; background: linear-gradient(150deg, #382c4f, #1b162d);
+  box-shadow: 0 25px 70px #000a, inset 0 0 35px #ffffff05; animation: appear .3s ease-out;
+}
+.close {
+  position: absolute; top: 12px; right: 16px; width: 36px; height: 36px;
+  color: var(--muted); background: transparent; border: 0; font-size: 1.8rem; cursor: pointer;
+  transition: color .2s;
+}
+.close:hover { color: var(--cream); }
+.modal-kicker { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 6px; }
+.modal h2 { color: var(--gold); font-size: 1.8rem; margin: 0 0 20px; }
+.riddle {
+  padding: 22px; border: 1px solid #f3d99444; border-left: 4px solid var(--gold);
+  border-radius: 14px; background: #ffffff07; color: var(--cream); line-height: 1.8; text-align: left;
+  font-size: .98rem; font-family: "Playfair Display", serif;
+}
+.input-group { display: flex; gap: 10px; margin-top: 22px; }
+input {
+  min-width: 0; flex: 1; padding: 13px 16px; color: var(--cream);
+  background: #111326; border: 1px solid #f3d99455; border-radius: 12px;
+}
+input:focus { border-color: var(--gold); }
+.btn {
+  padding: 13px 22px; color: #1e162d; font-weight: 600; font-size: .9rem;
+  background: linear-gradient(135deg, #f7e6b0, var(--gold-deep)); border: 0;
+  border-radius: 12px; cursor: pointer; transition: transform .2s, filter .2s;
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.error { display: none; margin-top: 14px; color: #ffb7c5; font-size: .86rem; line-height: 1.6; }
+.gift {
   display: none; margin-top: 22px; padding: 24px 16px; border: 1px solid #8edbb1;
   border-radius: 15px; background: #8edbb10d; animation: appear .4s ease-out;
 }
@@ -228,7 +278,7 @@ h1 {
   {day:11, emoji:"🏎️", riddle:"Événement sportif mythique où rugissent les moteurs de voitures de course ?", answers:["f1","formule 1","formule un"]},
   {day:12, emoji:"🗝️", riddle:"Dans quelle franchise de jeu vidéo Sora voyage-t-il avec Donald et Dingo munis d'une Keyblade ?", answers:["kingdom hearts"]},
   {day:13, emoji:"💖", riddle:"Quel objet moelleux en forme de symbole d'amour viendra décorer le canapé ?", answers:["coussin"]},
-  {day:14, emoji:"🧥", riddle:"Vêtement géant hémisphérique/hybride, ultra doux et chaud, parfait pour s'enrouler sur le canapé ?", answers:["sweat plaid","plaid sweat"]},
+  {day:14, emoji:"🧥", riddle:"Vêtement géant hémisphérique/hybride, ultra doux et chaud, parfait pour s'enrouler sur le kanapé ?", answers:["sweat plaid","plaid sweat"]},
   {day:15, emoji:"🌊", riddle:"Comment appelle-t-on cette fine pluie de gouttelettes projetée par les vagues de la mer ?", answers:["embruns"]},
   {day:16, emoji:"🥤", riddle:"Récipient écologique et réutilisable en matériau transparent pour s'hydrater partout ?", answers:["gourde"]},
   {day:17, emoji:"🧩", riddle:"Jeu de patience consistant à assembler des centaines de petites pièces découpées ?", answers:["puzzle"]},
@@ -432,4 +482,31 @@ function checkAnswer(event) {
 function resetProgress() {
   if (!TEST_MODE) return;
   if (confirm("Réinitialiser toute la progression du calendrier ?")) {
-    try { localStorage.removeItem(STORAGE_KEY);
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    closeModal();
+    renderGrid();
+  }
+}
+
+document.getElementById("answerForm").addEventListener("submit", checkAnswer);
+document.getElementById("closeButton").addEventListener("click", closeModal);
+
+document.getElementById("modalOverlay").addEventListener("click", event => {
+  if (event.target === document.getElementById("modalOverlay")) closeModal();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && document.getElementById("modalOverlay").classList.contains("active")) {
+    closeModal();
+  }
+});
+
+if (TEST_MODE) {
+  document.getElementById("adminPanel").hidden = false;
+  document.getElementById("resetButton").addEventListener("click", resetProgress);
+}
+
+renderGrid();
+</script>
+</body>
+</html>
