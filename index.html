@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -399,12 +398,12 @@ input {
 <body>
 <header>
   <div class="crown">👑</div>
-  <h1>Le calendrier magique<br>de ma Princesse</h1>
+  <h1>Le calendrier de l'avent <br>de ma Princesse</h1>
   <p class="subtitle">
-    24 jours de magie, 24 énigmes à résoudre et plein de surprises.
+    24 jours de cadeaux, 24 énigmes à résoudre et plein de surprises.
     Chaque jour te rapproche d'un nouveau cadeau... ✨
   </p>
-  <div class="badge">🐾 Sous la protection magique de Kairi 🌟</div>
+  <div class="badge">🐾 Sous la protection magique de Kairi le pipi 🌟</div>
 </header>
 
 <main class="container">
@@ -418,8 +417,8 @@ input {
   <section class="grid" id="calendarGrid" aria-label="Calendrier de l'Avent"></section>
 
   <footer>
-    Fait avec tout mon amour ❤️<br>
-    Un petit cadeau, une énigme et une pensée pour toi chaque jour.
+    Fait avec tout mon amour (et un peu d'IA car mes compétences en codage sont limités) <br>
+    Un petit cadeau, une énigme et une case à ouvrir chaque jour !
   </footer>
 
   <footer id="adminPanel" hidden>
@@ -435,8 +434,8 @@ input {
     <h2 id="modalTitle">Jour 1</h2>
 
     <div class="locked-message" id="lockedMessage">
-      🔒 <p>Cette petite surprise dort encore...</p>
-      <p>Reviens le bon jour pour découvrir ce qui se cache derrière cette case ! ✨</p>
+      🔒 <p> ce n'est pas le bon jour petite curieuse...</p>
+      <p> Kairi le pipi surveille, ne triche pas !!! ✨</p>
     </div>
 
     <div id="puzzleArea">
@@ -450,7 +449,7 @@ input {
         </div>
       </form>
       <p class="error" id="errorMsg" role="status">
-        Pas tout à fait, ma Princesse... Essaie encore ! 🗝️
+        Pas tout à fait beauté... Essaie encore ! 🗝️
       </p>
     </div>
 
@@ -465,8 +464,6 @@ input {
 <script>
 "use strict";
 
-// Les énigmes et réponses sont conservées dans le navigateur.
-// Attention : sur GitHub Pages, le code source reste public.
 const defaultData = [
   {day:1, emoji:"🧟‍♂️", riddle:"Quel monstre légendaire entouré de bandelettes se réveille après des siècles de sommeil ?", answers:["momie"]},
   {day:2, emoji:"🧸", riddle:"Quel petit ourson célèbre adore le miel plus que tout au monde ?", answers:["winnie","winnie l'ourson"]},
@@ -477,11 +474,11 @@ const defaultData = [
   {day:7, emoji:"🔮", riddle:"Jeu de cartes mystique composé de 78 lames pour lire l'avenir et les arcanes...", answers:["tarot"]},
   {day:8, emoji:"📑", riddle:"Soin beauté cocooning qu'on applique sur la peau pour un moment de détente absolue ?", answers:["masque","masque visage"]},
   {day:9, emoji:"♨️", riddle:"Accessoire tout chaud qu'on glisse sous la couette ou contre soi les soirs d'hiver ?", answers:["bouillotte"]},
-  {day:10, emoji:"💎", riddle:"Quel est le nom du légendaire diamant bleu rendu célèbre par le film Titanic ?", answers:["coeur de l ocean","coeur de locean","le coeur de l ocean","coeur de l ocean"]},
+  {day:10, emoji:"💎", riddle:"Quel est le nom du légendaire diamant bleu rendu célèbre par le film Titanic ?", answers:["coeur de l ocean","coeur de locean","le coeur de l ocean"]},
   {day:11, emoji:"🏎️", riddle:"Événement sportif mythique où rugissent les moteurs de voitures de course ?", answers:["f1","formule 1","formule un"]},
   {day:12, emoji:"🗝️", riddle:"Dans quelle franchise de jeu vidéo Sora voyage-t-il avec Donald et Dingo munis d'une Keyblade ?", answers:["kingdom hearts"]},
   {day:13, emoji:"💖", riddle:"Quel objet moelleux en forme de symbole d'amour viendra décorer le canapé ?", answers:["coussin"]},
-  {day:14, emoji:"🧥", riddle:"Vêtement géant hybride, ultra doux et chaud, parfait pour s'enrouler sur le canapé ?", answers:["sweat plaid","plaid sweat"]},
+  {day:14, emoji:"🧥", riddle:"Vêtement géant hémisphérique/hybride, ultra doux et chaud, parfait pour s'enrouler sur le canapé ?", answers:["sweat plaid","plaid sweat"]},
   {day:15, emoji:"🌊", riddle:"Comment appelle-t-on cette fine pluie de gouttelettes projetée par les vagues de la mer ?", answers:["embruns"]},
   {day:16, emoji:"🥤", riddle:"Récipient écologique et réutilisable en matériau transparent pour s'hydrater partout ?", answers:["gourde"]},
   {day:17, emoji:"🧩", riddle:"Jeu de patience consistant à assembler des centaines de petites pièces découpées ?", answers:["puzzle"]},
@@ -528,13 +525,11 @@ function saveSolvedState(state) {
   }
 }
 
-// Les cases se débloquent selon la date locale de l'appareil.
-// En mode test, toutes les cases sont accessibles.
 function getCurrentAdventDay() {
   if (TEST_MODE) return 24;
 
   const now = new Date();
-  const month = now.getMonth(); // 0 = janvier, 11 = décembre
+  const month = now.getMonth(); 
 
   if (month !== 11) return 0;
 
@@ -555,12 +550,27 @@ function updateProgress() {
   $("progressFill").style.width = `${count / 24 * 100}%`;
 }
 
+// Fonction pour mélanger un tableau de manière fixe et aléatoire à chaque chargement
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    // Utilisation d'un ordre pseudo-aléatoire basé sur l'index pour mélanger les cases visuellement
+    const j = Math.floor(Math.sin(i * 999) * 10000) % (i + 1);
+    const positiveJ = Math.abs(j);
+    [shuffled[i], shuffled[positiveJ]] = [shuffled[positiveJ], shuffled[i]];
+  }
+  return shuffled;
+}
+
 function renderGrid() {
   const grid = $("calendarGrid");
   const solved = getSolvedState();
   grid.replaceChildren();
 
-  defaultData.forEach(item => {
+  // On mélange les cases ici pour qu'elles apparaissent dans le désordre sur la grille
+  const shuffledData = shuffleArray(defaultData);
+
+  shuffledData.forEach(item => {
     const unlocked = isUnlocked(item.day);
     const completed = Boolean(solved[item.day]);
 
@@ -582,9 +592,6 @@ function renderGrid() {
     icon.textContent = completed ? "✅" : unlocked ? "✨" : "🔒";
 
     const label = document.createElement("span");
-    label.className = "card-label";
-    label.textContent = completed ? "Découvert" : unlocked ? "À ouvrir" : "Bientôt";
-
     card.append(number, icon, label);
     card.addEventListener("click", () => openModal(item));
     grid.appendChild(card);
@@ -696,4 +703,3 @@ renderGrid();
 </script>
 </body>
 </html>
-```
