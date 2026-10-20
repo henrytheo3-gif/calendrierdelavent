@@ -231,28 +231,6 @@
             border-color: #fff;
         }
 
-        .card.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-            border-color: rgba(255, 255, 255, 0.15);
-            background: linear-gradient(145deg, #150a21 0%, #0a0412 100%);
-        }
-
-        .card.locked::before, .card.locked::after {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: none;
-        }
-
-        .card.locked .card-number-wrapper {
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .card.locked:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
         .card.unlocked {
             border-color: #ff85a2;
         }
@@ -358,4 +336,312 @@
         .input-group {
             display: flex;
             gap: 12px;
-            margin-top: 22px
+            margin-top: 22px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            background: rgba(10, 4, 18, 0.6);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--gold-light);
+            box-shadow: 0 0 12px rgba(241, 196, 15, 0.3);
+        }
+
+        button.btn-submit {
+            background: linear-gradient(135deg, var(--gold-primary), #d35400);
+            border: none;
+            color: white;
+            padding: 14px 26px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            box-shadow: 0 4px 15px rgba(211, 84, 0, 0.4);
+        }
+
+        button.btn-submit:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+        }
+
+        .gift-revelation {
+            margin-top: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(46, 204, 113, 0.05));
+            border: 1px solid #2ecc71;
+            border-radius: 20px;
+            animation: fadeIn 0.5s ease;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
+        }
+
+        .gift-revelation h3 {
+            color: #2ecc71;
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .gift-emoji-display {
+            font-size: 5rem;
+            margin: 15px 0;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .admin-panel {
+            margin-top: 60px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .admin-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-admin {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 7px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .btn-admin:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.2); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <div class="floating-symbol" style="top: 12%; left: 6%; font-size: 2rem;">📚</div>
+    <div class="floating-symbol" style="top: 25%; right: 8%; font-size: 2.5rem;">🌟</div>
+    <div class="floating-symbol" style="top: 70%; left: 5%; font-size: 2.2rem;">✨</div>
+    <div class="floating-symbol" style="top: 80%; right: 7%; font-size: 2rem;">📖</div>
+
+    <header>
+        <div class="princess-crown">👑</div>
+        <h1>Calendrier de l'Avent pour ma Princesse</h1>
+        <p class="subtitle">Chaque jour de décembre, résous l'énigme pour révéler l'indice secret de ton cadeau... ✨</p>
+        <div class="kairi-badge">
+            🐾 <span>Sous la protection magique de Kairi</span> 🌟
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="grid" id="calendarGrid"></div>
+
+        <div class="admin-panel">
+            <p>⚙️ <strong>Mode Testeur (Créateur)</strong></p>
+            <div class="admin-controls">
+                <button class="btn-admin" onclick="resetProgress()">Réinitialiser la progression</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2 class="modal-day-title" id="modalTitle">Jour 1</h2>
+            
+            <div class="riddle-box" id="modalRiddle">
+                Chargement de l'énigme...
+            </div>
+
+            <div id="interactionArea">
+                <div class="input-group">
+                    <input type="text" id="answerInput" placeholder="Ta réponse..." autocomplete="off">
+                    <button class="btn-submit" onclick="checkAnswer()">Valider</button>
+                </div>
+                <div class="error-msg" id="errorMsg">Ce n'est pas tout à fait la bonne réponse... Réessaie ma princesse ! 🗝️</div>
+            </div>
+
+            <div class="gift-revelation" id="giftRevelation" style="display: none;">
+                <h3>✨ Bravo ! Ton indice cadeau :</h3>
+                <div class="gift-emoji-display" id="giftEmoji">🧟‍♂️</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultData = [
+            { day: 1, emoji: "🧟‍♂️", riddle: "Énigme du 1er décembre : Quel monstre légendaire entouré de bandelettes se réveille après des siècles de sommeil ?", answer: "momie" },
+            { day: 2, emoji: "🧸", riddle: "Énigme du 2 décembre : Quel petit ourson célèbre adore le miel plus que tout au monde ?", answer: "winnie" },
+            { day: 3, emoji: "🐾", riddle: "Énigme du 3 décembre : Quel accessoire cylindrique Kairi adorerait traverser à toute vitesse ?", answer: "tunnel" },
+            { day: 4, emoji: "🥚", riddle: "Énigme du 4 décembre : Sur la table du petit-déjeuner, quel objet élégant maintient ton œuf à la coque debout ?", answer: "coquetier" },
+            { day: 5, emoji: "🗿", riddle: "Énigme du 5 décembre : Dans la mythologie maya, quel dieu géant de la montagne donne son nom à cette aventure Unlock ?", answer: "cabrakan" },
+            { day: 6, emoji: "🐈", riddle: "Énigme du 6 décembre : Objet mural indispensable pour voir passer les 12 mois de l'année en compagnie de félins ?", answer: "calendrier" },
+            { day: 7, emoji: "🔮", riddle: "Énigme du 7 décembre : Jeu de cartes mystique composé de 78 lames pour lire l'avenir et les arcanes...", answer: "tarot" },
+            { day: 8, emoji: "📑", riddle: "Énigme du 8 décembre : Soin beauté cocooning qu'on applique sur la peau pour un moment de détente absolue ?", answer: "masque" },
+            { day: 9, emoji: "♨️", riddle: "Énigme du 9 décembre : Accessoire tout chaud qu'on glisse sous la couette ou contre soi les soirs d'hiver ?", answer: "bouillotte" },
+            { day: 10, emoji: "💎", riddle: "Énigme du 10 décembre : Quel est le nom du légendaire diamant bleu rendu célèbre par le film Titanic ?", answer: "coeur de l'ocean" },
+            { day: 11, emoji: "🏎️", riddle: "Énigme du 11 décembre : Événement sportif mythique où rugissent les moteurs de voitures de course rétro ?", answer: "f1" },
+            { day: 12, emoji: "🗝️", riddle: "Énigme du 12 décembre : Dans quelle franchise de jeu vidéo Sora voyage-t-il avec Donald et Dingo munis d'une Keyblade ?", answer: "kingdom hearts" },
+            { day: 13, emoji: "💖", riddle: "Énigme du 13 décembre : Quel objet moelleux en forme de symbole d'amour viendra décorer le canapé ?", answer: "coussin" },
+            { day: 14, emoji: "🧥", riddle: "Énigme du 14 décembre : Vêtement géant hybride, ultra doux et chaud, parfait pour s'enrouler sur le canapé ?", answer: "sweat plaid" },
+            { day: 15, emoji: "🌊", riddle: "Énigme du 15 décembre : Comment appelle-t-il cette fine pluie de gouttelettes projetée par les vagues de la mer ?", answer: "embruns" },
+            { day: 16, emoji: "🥤", riddle: "Énigme du 16 décembre : Récipient écologique et réutilisable en matériau transparent pour s'hydrater partout ?", answer: "gourde" },
+            { day: 17, emoji: "🧩", riddle: "Énigme du 17 décembre : Jeu de patience consistant à assembler des centaines de petites pièces découpées ?", answer: "puzzle" },
+            { day: 18, emoji: "⚔️", riddle: "Énigme du 18 décembre : Comment traduit-on 'Le dernier homme' en anglais ?", answer: "last man" },
+            { day: 19, emoji: "☕", riddle: "Énigme du 19 décembre : Chez quel personnage féerique de Lewis Carroll prend-on le thé avec le Chapeautier Fou ?", answer: "alice" },
+            { day: 20, emoji: "🧗", riddle: "Énigme du 20 décembre : Terme qui désigne l'action de grimper tout en haut d'une montagne ?", answer: "ascension" },
+            { day: 21, emoji: "⛏️", riddle: "Énigme du 21 décembre : Objet lumineux inspiré du monde composé entièrement de blocs créatifs ?", answer: "minecraft" },
+            { day: 22, emoji: "📿", riddle: "Énigme du 22 décembre : Bijou qu'on porte au poignet, orné d'une lettre personnalisée ?", answer: "bracelet" },
+            { day: 23, emoji: "🕵️", riddle: "Énigme du 23 décembre : Mot anglais désignant des enquêtes pleines de secrets et de 'mystère' ?", answer: "mystery" },
+            { day: 24, emoji: "🎨", riddle: "Énigme du 24 décembre : Périphérique informatique utilisé par les dessinateurs et artistes pour créer numériquement ?", answer: "tablette graphique" }
+        ];
+
+        let activeDay = null;
+
+        function getSolvedState() {
+            try {
+                const saved = localStorage.getItem('advent_solved');
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveSolvedState(day) {
+            try {
+                const state = getSolvedState();
+                state[day] = true;
+                localStorage.setItem('advent_solved', JSON.stringify(state));
+            } catch (e) {}
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('calendarGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            const solvedState = getSolvedState();
+
+            defaultData.forEach(item => {
+                const card = document.createElement('div');
+                const solved = solvedState[item.day];
+
+                card.className = 'card';
+                if (solved) {
+                    card.classList.add('solved');
+                } else {
+                    card.classList.add('unlocked');
+                }
+
+                card.innerHTML = `
+                    <div class="bow">🎀</div>
+                    <div class="card-status">${solved ? '✅' : '🔓'}</div>
+                    <div class="card-number-wrapper">
+                        <span class="card-number">${item.day}</span>
+                    </div>
+                `;
+
+                card.onclick = () => openModal(item);
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(item) {
+            activeDay = item;
+            const solvedState = getSolvedState();
+            const isSolved = solvedState[item.day];
+
+            document.getElementById('modalTitle').innerText = `Jour ${item.day}`;
+            document.getElementById('modalRiddle').innerText = item.riddle;
+            document.getElementById('modalOverlay').classList.add('active');
+            document.getElementById('errorMsg').style.display = 'none';
+
+            const interactionArea = document.getElementById('interactionArea');
+            const giftArea = document.getElementById('giftRevelation');
+
+            if (isSolved) {
+                interactionArea.style.display = 'none';
+                giftArea.style.display = 'block';
+                document.getElementById('giftEmoji').innerText = item.emoji;
+            } else {
+                interactionArea.style.display = 'block';
+                giftArea.style.display = 'none';
+                document.getElementById('answerInput').value = '';
+                document.getElementById('answerInput').focus();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        function checkAnswer() {
+            if (!activeDay) return;
+            const input = document.getElementById('answerInput').value.trim().toLowerCase();
+            const expected = activeDay.answer.toLowerCase();
+
+            if (input.includes(expected) || (expected.includes(input) && input.length >= 3)) {
+                saveSolvedState(activeDay.day);
+                document.getElementById('interactionArea').style.display = 'none';
+                document.getElementById('giftRevelation').style.display = 'block';
+                document.getElementById('giftEmoji').innerText = activeDay.emoji;
+                renderGrid();
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+
+        function resetProgress() {
+            if (confirm("Réinitialiser toute la progression du calendrier ?")) {
+                try {
+                    localStorage.removeItem('advent_solved');
+                } catch(e) {}
+                renderGrid();
+                alert("Progression réinitialisée.");
+            }
+        }
+
+        document.getElementById('answerInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', renderGrid);
+        renderGrid();
+    </script>
+</body>
+</html>
