@@ -157,23 +157,16 @@
 
         .card-number {
             font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--gold-light);
-            margin-bottom: 4px;
-        }
-
-        .card-emoji {
-            font-size: 1.6rem;
-            margin-top: 2px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         .card-status {
             position: absolute;
             top: 8px;
             right: 8px;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
         }
 
         /* Modale */
@@ -237,7 +230,7 @@
         .modal-day-title {
             font-family: 'Cinzel', serif;
             color: var(--gold-light);
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin-bottom: 15px;
         }
 
@@ -292,7 +285,7 @@
 
         .gift-revelation {
             margin-top: 20px;
-            padding: 20px;
+            padding: 25px;
             background: rgba(46, 204, 113, 0.15);
             border: 1px solid #2ecc71;
             border-radius: 16px;
@@ -301,13 +294,15 @@
 
         .gift-revelation h3 {
             color: #2ecc71;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             font-size: 1.2rem;
         }
 
-        .gift-revelation p {
-            font-size: 1.1rem;
-            font-weight: 600;
+        .gift-emoji-display {
+            font-size: 4.5rem;
+            margin: 10px 0;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .error-msg {
@@ -355,6 +350,11 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        @keyframes popIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -362,17 +362,17 @@
     <div class="stars"></div>
 
     <header>
-        <h1>Calendrier de l'Avent</h1>
-        <p class="subtitle">Chaque jour, une énigme à résoudre pour débloquer ton cadeau secret ✨</p>
+        <h1>Calendrier de l'Avent pour ma princesse </h1>
+        <p class="subtitle">Chaque jour, une énigme à résoudre pour débloquer l'indice de ton cadeau ✨</p>
         <div class="kairi-badge">
-            🐾 <span>Gardé sous la haute surveillance de Kairi</span> 🌟
+            🐾 <span>Gardé sous la haute surveillance de Kairi le pipi </span> 🌟
         </div>
     </header>
 
     <div class="container">
         <div class="grid" id="calendarGrid"></div>
 
-        <!-- Panneau discret de test pour toi -->
+        <!-- Panneau de test pour le créateur -->
         <div class="admin-panel">
             <p>⚙️ <strong>Mode Testeur (Créateur)</strong></p>
             <div class="admin-controls">
@@ -401,45 +401,43 @@
             </div>
 
             <div class="gift-revelation" id="giftRevelation" style="display: none;">
-                <h3>✨ Bravo ! Cadeau débloqué :</h3>
-                <p id="giftText">Ton cadeau apparaîtra ici !</p>
+                <h3>✨ Bravo ! Ton indice cadeau :</h3>
+                <div class="gift-emoji-display" id="giftEmoji">🧟‍♂️</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Données des 24 jours : Cadeaux exacts de ton tableau + émojis indices
         const defaultData = [
-            { day: 1, emoji: "🧟‍♂️", gift: "Unlock le réveil de la momie", riddle: "Énigme du 1er décembre : Quel monstre légendaire entouré de bandelettes se réveille après des siècles de sommeil ?", answer: "momie" },
-            { day: 2, emoji: "🧸", gift: "Peluche Winnie", riddle: "Énigme du 2 décembre : Quel petit ourson célèbre adore le miel plus que tout au monde ?", answer: "winnie" },
-            { day: 3, emoji: "🐾", gift: "Tunnel chat", riddle: "Énigme du 3 décembre : Quel accessoire cylindrique Kairi adorerait traverser à toute vitesse ?", answer: "tunnel" },
-            { day: 4, emoji: "🥚", gift: "Coquetier en porcelaine", riddle: "Énigme du 4 décembre : Sur la table du petit-déjeuner, quel objet élégant maintient ton œuf à la coque debout ?", answer: "coquetier" },
-            { day: 5, emoji: "🗿", gift: "Unlock à la poursuite de Cabrakan", riddle: "Énigme du 5 décembre : Dans la mythologie maya, quel dieu géant de la montagne donne son nom à cette aventure Unlock ?", answer: "cabrakan" },
-            { day: 6, emoji: "🐈", gift: "Calendrier chats", riddle: "Énigme du 6 décembre : Objet mural indispensable pour voir passer les 12 mois de l'année en compagnie de félins ?", answer: "calendrier" },
-            { day: 7, emoji: "🔮", gift: "Jeu de tarot divinatoire", riddle: "Énigme du 7 décembre : Jeu de cartes mystique composé de 78 lames pour lire l'avenir et les arcanes...", answer: "tarot" },
-            { day: 8, emoji: "📑", gift: "Masque pour le visage", riddle: "Énigme du 8 décembre : Soin beauté cocooning qu'on applique sur la peau pour un moment de détente absolue ?", answer: "masque" },
-            { day: 9, emoji: "♨️", gift: "Bouillotte", riddle: "Énigme du 9 décembre : Accessoire tout chaud qu'on glisse sous la couette ou contre soi les soirs d'hiver ?", answer: "bouillotte" },
-            { day: 10, emoji: "💎", gift: "Unlock le cœur de l'Océan", riddle: "Énigme du 10 décembre : Quel est le nom du légendaire diamant bleu rendu célèbre par le film Titanic ?", answer: "coeur de l'ocean" },
-            { day: 11, emoji: "🏎️", gift: "Place GP F1 historique", riddle: "Énigme du 11 décembre : Événement sportif mythique où rugissent les moteurs de voitures de course rétro ?", answer: "f1" },
-            { day: 12, emoji: "🗝️", gift: "Jeu Kingdom Hearts", riddle: "Énigme du 12 décembre : Dans quelle franchise de jeu vidéo Sora voyage-t-il avec Donald et Dingo munis d'une Keyblade ?", answer: "kingdom hearts" },
-            { day: 13, emoji: "💖", gift: "Coussin cœur", riddle: "Énigme du 13 décembre : Quel objet moelleux en forme de symbole d'amour viendra décorer le canapé ?", answer: "coussin" },
-            { day: 14, emoji: "🧥", gift: "Sweat plaid", riddle: "Énigme du 14 décembre : Vêtement géant hybride, ultra doux et chaud, parfait pour s'enrouler sur le canapé ?", answer: "sweat plaid" },
-            { day: 15, emoji: "🌊", gift: "Unlock le chant des embruns", riddle: "Énigme du 15 décembre : Comment appelle-t-il cette fine pluie de gouttelettes projetée par les vagues de la mer ?", answer: "embruns" },
-            { day: 16, emoji: "🥤", gift: "Gourde en verre", riddle: "Énigme du 16 décembre : Récipient écologique et réutilisable en matériau transparent pour s'hydrater partout ?", answer: "gourde" },
-            { day: 17, emoji: "🧩", gift: "Puzzles", riddle: "Énigme du 17 décembre : Jeu de patience consistant à assembler des centaines de petites pièces découpées ?", answer: "puzzle" },
-            { day: 18, emoji: "⚔️", gift: "Unlock Last Man", riddle: "Énigme du 18 décembre : Comment traduit-on 'Le dernier homme' en anglais ?", answer: "last man" },
-            { day: 19, emoji: "☕", gift: "Coffre thés Alice aux pays des Merveilles", riddle: "Énigme du 19 décembre : Chez quel personnage féerique de Lewis Carroll prend-on le thé avec le Chapeautier Fou ?", answer: "alice" },
-            { day: 20, emoji: "🧗", gift: "Unlock l'ascension", riddle: "Énigme du 20 décembre : Terme qui désigne l'action de grimper tout en haut d'une montagne ?", answer: "ascension" },
-            { day: 21, emoji: "⛏️", gift: "Lampe Minecraft", riddle: "Énigme du 21 décembre : Objet lumineux inspiré du monde composé entièrement de blocs créatifs ?", answer: "minecraft" },
-            { day: 22, emoji: "📿", gift: "Bracelet avec initiale", riddle: "Énigme du 22 décembre : Bijou qu'on porte au poignet, orné d'une lettre personnalisée ?", answer: "bracelet" },
-            { day: 23, emoji: "🕵️", gift: "Unlock 2 Mystery Adventures", riddle: "Énigme du 23 décembre : Mot anglais désignant des enquêtes pleines de secrets et de 'mystère' ?", answer: "mystery" },
-            { day: 24, emoji: "🎨", gift: "Tablette graphique", riddle: "Énigme du 24 décembre : Périphérique informatique utilisé par les dessinateurs et artistes pour créer numériquement ?", answer: "tablette graphique" }
+            { day: 1, emoji: "🧟‍♂️", riddle: "Énigme du 1er décembre : Quel monstre légendaire entouré de bandelettes se réveille après des siècles de sommeil ?", answer: "momie" },
+            { day: 2, emoji: "🧸", riddle: "Énigme du 2 décembre : Quel petit ourson célèbre adore le miel plus que tout au monde ?", answer: "winnie" },
+            { day: 3, emoji: "🐾", riddle: "Énigme du 3 décembre : Quel accessoire cylindrique Kairi adorerait traverser à toute vitesse ?", answer: "tunnel" },
+            { day: 4, emoji: "🥚", riddle: "Énigme du 4 décembre : Sur la table du petit-déjeuner, quel objet élégant maintient ton œuf à la coque debout ?", answer: "coquetier" },
+            { day: 5, emoji: "🗿", riddle: "Énigme du 5 décembre : Dans la mythologie maya, quel dieu géant de la montagne donne son nom à cette aventure Unlock ?", answer: "cabrakan" },
+            { day: 6, emoji: "🐈", riddle: "Énigme du 6 décembre : Objet mural indispensable pour voir passer les 12 mois de l'année en compagnie de félins ?", answer: "calendrier" },
+            { day: 7, emoji: "🔮", riddle: "Énigme du 7 décembre : Jeu de cartes mystique composé de 78 lames pour lire l'avenir et les arcanes...", answer: "tarot" },
+            { day: 8, emoji: "📑", riddle: "Énigme du 8 décembre : Soin beauté cocooning qu'on applique sur la peau pour un moment de détente absolue ?", answer: "masque" },
+            { day: 9, emoji: "♨️", riddle: "Énigme du 9 décembre : Accessoire tout chaud qu'on glisse sous la couette ou contre soi les soirs d'hiver ?", answer: "bouillotte" },
+            { day: 10, emoji: "💎", riddle: "Énigme du 10 décembre : Quel est le nom du légendaire diamant bleu rendu célèbre par le film Titanic ?", answer: "coeur de l'ocean" },
+            { day: 11, emoji: "🏎️", riddle: "Énigme du 11 décembre : Événement sportif mythique où rugissent les moteurs de voitures de course rétro ?", answer: "f1" },
+            { day: 12, emoji: "🗝️", riddle: "Énigme du 12 décembre : Dans quelle franchise de jeu vidéo Sora voyage-t-il avec Donald et Dingo munis d'une Keyblade ?", answer: "kingdom hearts" },
+            { day: 13, emoji: "💖", riddle: "Énigme du 13 décembre : Quel objet moelleux en forme de symbole d'amour viendra décorer le canapé ?", answer: "coussin" },
+            { day: 14, emoji: "🧥", riddle: "Énigme du 14 décembre : Vêtement géant hybride, ultra doux et chaud, parfait pour s'enrouler sur le canapé ?", answer: "sweat plaid" },
+            { day: 15, emoji: "🌊", riddle: "Énigme du 15 décembre : Comment appelle-t-il cette fine pluie de gouttelettes projetée par les vagues de la mer ?", answer: "embruns" },
+            { day: 16, emoji: "🥤", riddle: "Énigme du 16 décembre : Récipient écologique et réutilisable en matériau transparent pour s'hydrater partout ?", answer: "gourde" },
+            { day: 17, emoji: "🧩", riddle: "Énigme du 17 décembre : Jeu de patience consistant à assembler des centaines de petites pièces découpées ?", answer: "puzzle" },
+            { day: 18, emoji: "⚔️", riddle: "Énigme du 18 décembre : Comment traduit-on 'Le dernier homme' en anglais ?", answer: "last man" },
+            { day: 19, emoji: "☕", riddle: "Énigme du 19 décembre : Chez quel personnage féerique de Lewis Carroll prend-on le thé avec le Chapeautier Fou ?", answer: "alice" },
+            { day: 20, emoji: "🧗", riddle: "Énigme du 20 décembre : Terme qui désigne l'action de grimper tout en haut d'une montagne ?", answer: "ascension" },
+            { day: 21, emoji: "⛏️", riddle: "Énigme du 21 décembre : Objet lumineux inspiré du monde composé entièrement de blocs créatifs ?", answer: "minecraft" },
+            { day: 22, emoji: "📿", riddle: "Énigme du 22 décembre : Bijou qu'on porte au poignet, orné d'une lettre personnalisée ?", answer: "bracelet" },
+            { day: 23, emoji: "🕵️", riddle: "Énigme du 23 décembre : Mot anglais désignant des enquêtes pleines de secrets et de 'mystère' ?", answer: "mystery" },
+            { day: 24, emoji: "🎨", riddle: "Énigme du 24 décembre : Périphérique informatique utilisé par les dessinateurs et artistes pour créer numériquement ?", answer: "tablette graphique" }
         ];
 
         let activeDay = null;
         let forceUnlockAll = false;
 
-        // Charger l'état sauvegardé
         function getSolvedState() {
             const saved = localStorage.getItem('advent_solved');
             return saved ? JSON.parse(saved) : {};
@@ -451,26 +449,21 @@
             localStorage.setItem('advent_solved', JSON.stringify(state));
         }
 
-        // Vérifier la disponibilité de la date
         function isDayAvailable(day) {
             if (forceUnlockAll) return true;
             const now = new Date();
             const currentMonth = now.getMonth(); // 11 = Décembre
             const currentDate = now.getDate();
 
-            // Si on est en Décembre
             if (currentMonth === 11) {
                 return day <= currentDate;
             }
-            // Si on est après Décembre
             if (currentMonth > 11 || now.getFullYear() > 2026) {
                 return true;
             }
-            // Avant Décembre
             return false;
         }
 
-        // Rendu de la grille
         function renderGrid() {
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
@@ -489,7 +482,6 @@
                 card.innerHTML = `
                     <div class="card-status">${solved ? '✅' : (available ? '🔓' : '🔒')}</div>
                     <div class="card-number">${item.day}</div>
-                    <div class="card-emoji">${item.emoji}</div>
                 `;
 
                 card.onclick = () => openModal(item);
@@ -497,7 +489,6 @@
             });
         }
 
-        // Ouverture Modale
         function openModal(item) {
             const available = isDayAvailable(item.day);
             if (!available) {
@@ -509,7 +500,7 @@
             const solvedState = getSolvedState();
             const isSolved = solvedState[item.day];
 
-            document.getElementById('modalTitle').innerText = `Jour ${item.day} - ${item.emoji}`;
+            document.getElementById('modalTitle').innerText = `Jour ${item.day}`;
             document.getElementById('modalRiddle').innerText = item.riddle;
             document.getElementById('modalOverlay').classList.add('active');
             document.getElementById('errorMsg').style.display = 'none';
@@ -520,7 +511,7 @@
             if (isSolved) {
                 interactionArea.style.display = 'none';
                 giftArea.style.display = 'block';
-                document.getElementById('giftText').innerText = item.gift;
+                document.getElementById('giftEmoji').innerText = item.emoji;
             } else {
                 interactionArea.style.display = 'block';
                 giftArea.style.display = 'none';
@@ -533,25 +524,22 @@
             document.getElementById('modalOverlay').classList.remove('active');
         }
 
-        // Validation Réponse
         function checkAnswer() {
             if (!activeDay) return;
             const input = document.getElementById('answerInput').value.trim().toLowerCase();
             const expected = activeDay.answer.toLowerCase();
 
-            // Petite tolérance aux fautes/mots clés
             if (input.includes(expected) || expected.includes(input) && input.length >= 3) {
                 saveSolvedState(activeDay.day);
                 document.getElementById('interactionArea').style.display = 'none';
                 document.getElementById('giftRevelation').style.display = 'block';
-                document.getElementById('giftText').innerText = activeDay.gift;
+                document.getElementById('giftEmoji').innerText = activeDay.emoji;
                 renderGrid();
             } else {
                 document.getElementById('errorMsg').style.display = 'block';
             }
         }
 
-        // Mode Testeur Controls
         function unlockAllDays() {
             forceUnlockAll = true;
             renderGrid();
@@ -567,14 +555,12 @@
             }
         }
 
-        // Permettre la validation par la touche Entrée
         document.getElementById('answerInput').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 checkAnswer();
             }
         });
 
-        // Initialisation
         renderGrid();
     </script>
 </body>
