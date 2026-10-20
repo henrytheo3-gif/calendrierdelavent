@@ -3,468 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#170c29">
-<title>Mon calendrier magique 👑</title>
-
+<meta name="theme-color" content="#17142e">
+<title>Le grimoire de Noël de ma Princesse 👑</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gold: #f3d47a;
-  --pink: #ff9fbe;
-  --purple: #211239;
-  --night: #10091c;
-  --white: #fff8f0;
+  --night: #111326;
+  --plum: #29203f;
+  --violet: #49365f;
+  --gold: #f3d994;
+  --gold-deep: #c89f55;
+  --rose: #f3b7c8;
+  --cream: #fff7e9;
+  --muted: #d9cfe3;
+  --green: #9de0bc;
 }
-
 * { box-sizing: border-box; }
-
+html { scroll-behavior: smooth; }
 body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 0 16px 50px;
-  color: var(--white);
-  font-family: Montserrat, sans-serif;
+  margin: 0; min-height: 100vh; padding: 0 18px 48px;
+  color: var(--cream); font-family: "DM Sans", sans-serif; overflow-x: hidden;
   background:
-    radial-gradient(ellipse at top, #48265f 0%, #211239 42%, #10091c 100%);
-  overflow-x: hidden;
+    radial-gradient(ellipse at 50% -15%, #72528b 0, transparent 47%),
+    radial-gradient(ellipse at 5% 65%, #35264f 0, transparent 35%),
+    linear-gradient(160deg, #1e1c37, var(--night) 68%);
 }
-
 body::before {
-  content: "✦  ·  ✧   ·  ✦   ·  ✧   ·  ✦";
-  position: fixed;
-  inset: 0;
-  color: #fff;
-  opacity: .13;
-  font-size: 22px;
-  line-height: 85px;
-  letter-spacing: 24px;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: -1;
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  opacity: .35;
+  background-image:
+    radial-gradient(1px 1px at 8% 16%, #fff, transparent 2px),
+    radial-gradient(2px 2px at 82% 24%, var(--gold), transparent 3px),
+    radial-gradient(1px 1px at 65% 72%, #fff, transparent 2px),
+    radial-gradient(1px 1px at 21% 81%, var(--rose), transparent 2px),
+    radial-gradient(2px 2px at 92% 88%, #fff, transparent 3px);
+  background-size: 240px 220px;
 }
-
-header {
-  text-align: center;
-  padding: 48px 0 30px;
-}
-
+button, input { font: inherit; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--rose); outline-offset: 4px; }
+.page-shell { max-width: 1120px; margin: 0 auto; position: relative; }
+header { text-align: center; padding: 44px 0 24px; position: relative; }
+.header-ornament { color: var(--gold); letter-spacing: .5em; font-size: .8rem; margin-bottom: 12px; }
 .crown {
-  font-size: 48px;
-  display: inline-block;
-  animation: crown 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 15px #f3d47a88);
+  font-size: 48px; display: inline-block; margin-bottom: 4px;
+  filter: drop-shadow(0 0 18px #f3d99466); animation: float 4s ease-in-out infinite;
 }
-
-h1, h2, h3 {
-  font-family: Cinzel, Georgia, serif;
-}
-
+h1, h2, h3 { font-family: "Cinzel", Georgia, serif; }
 h1 {
-  color: var(--gold);
-  font-size: clamp(1.7rem, 5vw, 3rem);
-  line-height: 1.35;
-  margin: 14px auto;
-  text-shadow: 0 0 24px #f3d47a44;
+  margin: 10px auto 14px; max-width: 780px; color: var(--gold);
+  font-size: clamp(1.8rem, 5vw, 3.2rem); line-height: 1.25; font-weight: 600;
+  text-shadow: 0 3px 30px #f3d9942b;
 }
-
 .subtitle {
-  max-width: 580px;
-  margin: 0 auto 22px;
-  line-height: 1.8;
-  color: #e6dbea;
-  font-size: .95rem;
+  max-width: 610px; margin: 0 auto 20px; color: #e9dfed;
+  font-size: .98rem; line-height: 1.85;
 }
-
+.subtitle em { color: var(--rose); font-family: "Playfair Display", serif; }
 .badge {
-  display: inline-block;
-  padding: 10px 18px;
-  border: 1px solid #f3d47a77;
-  border-radius: 30px;
-  background: #ffffff0b;
-  color: #ffe5f0;
-  font-size: .85rem;
+  display: inline-flex; align-items: center; gap: 9px; padding: 10px 17px;
+  border: 1px solid #f3d99466; border-radius: 999px; background: #ffffff09;
+  color: #ffe6ee; font-size: .86rem; box-shadow: inset 0 0 18px #ffffff05;
 }
-
-.container {
-  max-width: 1050px;
-  margin: auto;
+.story-intro {
+  display: flex; align-items: center; justify-content: center; gap: 13px;
+  max-width: 760px; margin: 26px auto 30px; padding: 17px 20px;
+  border: 1px solid #f3d99438; border-radius: 16px;
+  background: linear-gradient(110deg, #ffffff08, #f3d9940b, #ffffff06);
+  color: var(--muted); line-height: 1.65; font-size: .88rem; text-align: left;
 }
-
-.progress {
-  max-width: 360px;
-  margin: 0 auto 28px;
-  text-align: center;
-  font-size: .8rem;
-  color: #e4d5ec;
-}
-
-.progress-track {
-  height: 6px;
-  margin-top: 10px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #ffffff18;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, var(--pink), var(--gold));
-  transition: width .4s;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 13px;
-}
-
-@media (min-width: 480px) {
-  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
-}
-
-@media (min-width: 700px) {
-  .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
-}
-
-@media (min-width: 950px) {
-  .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-}
-
+.story-icon { font-size: 1.8rem; flex-shrink: 0; }
+.story-intro strong { color: var(--gold); font-weight: 600; }
+.progress { max-width: 370px; margin: 0 auto 27px; text-align: center; color: var(--muted); font-size: .8rem; }
+.progress-track { height: 7px; margin-top: 10px; border-radius: 99px; overflow: hidden; background: #ffffff18; }
+.progress-fill { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--rose), var(--gold)); transition: width .4s ease; }
+.section-heading { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 0 18px; color: #e8d9ed; font: italic 500 1.15rem "Playfair Display", serif; }
+.section-heading::before, .section-heading::after { content: "✦"; color: var(--gold-deep); font-size: .7rem; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+@media (min-width: 480px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+@media (min-width: 700px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; } }
+@media (min-width: 960px) { .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; } }
 .card {
-  min-width: 0;
-  aspect-ratio: 1;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: var(--white);
-  border: 1px solid #f3d47a77;
-  border-radius: 17px;
-  background: linear-gradient(145deg, #42235e, #21112f);
-  box-shadow: 0 7px 18px #0003;
-  transition: transform .25s, border-color .25s, box-shadow .25s;
-  cursor: pointer;
-  font-family: inherit;
+  position: relative; min-width: 0; aspect-ratio: .92; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 8px; color: var(--cream); cursor: pointer; font-family: inherit;
+  border: 1px solid #e8c77b82; border-radius: 15px 15px 18px 18px;
+  background:
+    linear-gradient(135deg, #ffffff0d, transparent 45%),
+    linear-gradient(145deg, #514064, #2b2142 72%);
+  box-shadow: 0 8px 20px #0003, inset 0 0 0 4px #ffffff05;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
-
-.card:not(:disabled):hover {
-  transform: translateY(-5px);
-  border-color: var(--gold);
-  box-shadow: 0 10px 28px #f3d47a22;
-}
-
-.card:focus-visible, button:focus-visible, input:focus-visible {
-  outline: 3px solid var(--pink);
-  outline-offset: 3px;
-}
-
-.card:disabled {
-  cursor: not-allowed;
-  opacity: .58;
-  filter: saturate(.65);
-}
-
 .card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 7px;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, #b78a31, #fff0a8, #b78a31);
-  opacity: .7;
+  content: ""; position: absolute; top: 0; bottom: 0; left: 12px; width: 3px;
+  background: linear-gradient(180deg, transparent, #f3d99499 15%, #f3d99455 85%, transparent);
 }
-
 .card::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 7px;
-  transform: translateY(-50%);
-  background: linear-gradient(180deg, #b78a31, #fff0a8, #b78a31);
-  opacity: .7;
+  content: "✦"; position: absolute; bottom: 7px; left: 10px;
+  font-size: .65rem; color: #f3d9948a;
 }
-
+.card:not(:disabled):hover { transform: translateY(-5px) rotate(-.5deg); border-color: var(--gold); box-shadow: 0 13px 28px #0005, 0 0 20px #f3d99415; }
+.card:disabled { cursor: not-allowed; opacity: .6; filter: saturate(.65); }
 .card-number {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 1px solid var(--gold);
-  background: #21112f;
-  color: var(--gold);
-  font: 700 1.55rem Cinzel, serif;
-  box-shadow: 0 0 15px #f3d47a22;
+  position: relative; z-index: 1; display: grid; place-items: center;
+  width: 53px; height: 53px; border-radius: 50%; border: 1px solid var(--gold);
+  background: #211b35e8; color: var(--gold); font: 700 1.45rem "Cinzel
+  .gift {
+  display: none; margin-top: 22px; padding: 24px 16px; border: 1px solid #8edbb1;
+  border-radius: 15px; background: #8edbb10d; animation: appear .4s ease-out;
 }
+.gift h3 { color: var(--green); font-size: 1.05rem; line-height: 1.6; }
+.gift-emoji { margin: 17px 0; font-size: 4.2rem; filter: drop-shadow(0 5px 9px #0004); }
+.gift p { color: #e7f8ed; font-size: .9rem; line-height: 1.8; }
+.locked-message { display: none; color: #f3e3f7; line-height: 1.8; }
+.locked-cat { font-size: 2.5rem; margin: 15px 0; }
+@keyframes float { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-6px) rotate(3deg); } }
+@keyframes appear { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-.card-icon {
-  position: absolute;
-  z-index: 3;
-  top: 7px;
-  right: 8px;
-  font-size: .95rem;
+/* Petite explosion d'étincelles quand la bonne réponse révèle l'indice */
+.magic-spark {
+  position: fixed; z-index: 30; pointer-events: none; left: var(--x); top: var(--y);
+  color: var(--spark-color, var(--gold)); font-size: var(--size, 20px); line-height: 1;
+  text-shadow: 0 0 12px currentColor; animation: sparkle-burst 1.25s cubic-bezier(.15,.65,.25,1) forwards;
 }
-
-.card-label {
-  position: relative;
-  z-index: 2;
-  font-size: .66rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: #f7e6bf;
+@keyframes sparkle-burst {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.2) rotate(0deg); }
+  12% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2) rotate(var(--spin, 140deg)); }
 }
-
-.card.solved {
-  background: linear-gradient(145deg, #244b3a, #142c24);
-  border-color: #79d9a3;
+.gift.reveal-celebration { animation: gift-reveal .75s ease-out both; }
+@keyframes gift-reveal {
+  0% { opacity: 0; transform: translateY(12px) scale(.88); box-shadow: 0 0 0 0 #9de0bc00; }
+  55% { opacity: 1; transform: translateY(-3px) scale(1.025); box-shadow: 0 0 35px #f3d99435; }
+  100% { opacity: 1; transform: translateY(0) scale(1); box-shadow: 0 0 0 0 #9de0bc00; }
 }
-
-.card.solved .card-number {
-  border-color: #79d9a3;
-  color: #a7f0c5;
-}
-
-footer {
-  margin-top: 42px;
-  text-align: center;
-  font-size: .8rem;
-  color: #c7b6d5;
-  line-height: 1.8;
-}
-
-/* Fenêtre des énigmes */
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  background: #08040de8;
-  backdrop-filter: blur(9px);
-  overflow-y: auto;
-}
-
-.overlay.active { display: flex; }
-
-.modal {
-  position: relative;
-  width: 100%;
-  max-width: 490px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 34px 24px 28px;
-  text-align: center;
-  border: 1px solid var(--gold);
-  border-radius: 24px;
-  background: linear-gradient(150deg, #39204e, #170c29);
-  box-shadow: 0 20px 80px #0008;
-  animation: appear .25s ease-out;
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  width: 38px;
-  height: 38px;
-  color: #f7d8e6;
-  background: transparent;
-  border: 0;
-  font-size: 1.8rem;
-  cursor: pointer;
-}
-
-.modal h2 {
-  color: var(--gold);
-  font-size: 1.7rem;
-  margin: 12px 0 20px;
-}
-
-.riddle {
-  padding: 22px;
-  border: 1px solid #f3d47a44;
-  border-left: 4px solid var(--gold);
-  border-radius: 12px;
-  background: #ffffff08;
-  color: #f4eaf9;
-  line-height: 1.85;
-  text-align: left;
-}
-
-.input-group {
-  display: flex;
-  gap: 9px;
-  margin-top: 20px;
-}
-
-input {
-  min-width: 0;
-  flex: 1;
-  padding: 13px;
-  color: white;
-  background: #10091c;
-  border: 1px solid #f3d47a66;
-  border-radius: 10px;
-  font: inherit;
-}
-
-.btn {
-  padding: 12px 17px;
-  color: #24132b;
-  font: 600 .9rem Montserrat, sans-serif;
-  background: linear-gradient(135deg, #ffe8a1, #e9b94c);
-  border: 0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform .2s;
-}
-
-.btn:hover { transform: translateY(-2px); }
-
-.error {
-  display: none;
-  margin-top: 14px;
-  color: #ffb0c1;
-  font-size: .85rem;
-  line-height: 1.6;
-}
-
-.gift {
-  display: none;
-  margin-top: 23px;
-  padding: 23px 14px;
-  border: 1px solid #79d9a3;
-  border-radius: 16px;
-  background: #79d9a310;
-  animation: appear .4s ease-out;
-}
-
-.gift h3 {
-  color: #a7f0c5;
-  font-size: 1.1rem;
-}
-
-.gift-emoji {
-  margin: 18px 0;
-  font-size: 4.5rem;
-}
-
-.gift p {
-  line-height: 1.7;
-  color: #e9f8ef;
-  font-size: .9rem;
-}
-
-.locked-message {
-  display: none;
-  line-height: 1.8;
-  color: #f3e3f7;
-}
-
-@keyframes crown {
-  0%, 100% { transform: translateY(0) rotate(-3deg); }
-  50% { transform: translateY(-5px) rotate(3deg); }
-}
-
-@keyframes appear {
-  from { opacity: 0; transform: translateY(10px) scale(.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-}
+@media (max-width: 380px) { body { padding-inline: 12px; } .input-group { flex-direction: column; } .modal { padding-inline: 18px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 </style>
 </head>
-
 <body>
-<header>
-  <div class="crown">👑</div>
-  <h1>Le calendrier de l'avent <br>de ma Princesse</h1>
-  <p class="subtitle">
-    24 jours de cadeaux, 24 énigmes à résoudre et plein de surprises.
-    Chaque jour te rapproche d'un nouveau cadeau... ✨
-  </p>
-  <div class="badge">🐾 Sous la protection magique de Kairi le pipi 🌟</div>
-</header>
+<div class="page-shell">
+  <header>
+    <div class="header-ornament">✦ · ✧ · ✦</div>
+    <div class="crown" aria-hidden="true">👑</div>
+    <h1>Le grimoire de Noël<br>de ma Princesse</h1>
+    <p class="subtitle">
+      Il était une fois, une princesse, un chat très curieux et
+      <em>24 petites histoires</em> à découvrir avant Noël…
+      Ouvre une case par jour et laisse la magie opérer. ✨
+    </p>
+    <div class="badge">🐾 Kairi, gardienne officielle des cadeaux 🌟</div>
+  </header>
 
-<main class="container">
-  <div class="progress">
-    <span id="progressText">0 cadeau découvert sur 24</span>
-    <div class="progress-track">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
+  <div class="story-intro">
+    <span class="story-icon" aria-hidden="true">📚</span>
+    <div><strong>Bienvenue dans ton livre enchanté.</strong><br>
+      Entre contes merveilleux, poussière d'étoiles et petites pattes de velours,
+      chaque énigme cache un indice vers une surprise rien qu'à toi.</div>
+    <span class="story-icon" aria-hidden="true">🏰</span>
   </div>
 
-  <section class="grid" id="calendarGrid" aria-label="Calendrier de l'Avent"></section>
+  <main>
+    <div class="progress">
+      <span id="progressText">0 cadeau découvert sur 24</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <h2 class="section-heading">Choisis un chapitre de ta magie</h2>
+    <section class="grid" id="calendarGrid" aria-label="Calendrier de l'Avent"></section>
+  </main>
 
-  <footer>
-    Fait avec tout mon amour (et un peu d'IA car mes compétences en codage sont limités) <br>
-    Un petit cadeau, une énigme et une case à ouvrir chaque jour !
-  </footer>
+  <div class="bottom-note">
+    « Les plus belles histoires sont celles qu'on écrit à deux. »
+    <div class="paw">🐾 ✨ 🐾</div>
+    <div class="footer-line">Fabriqué avec amour, quelques lignes de code et beaucoup de magie.</div>
+  </div>
 
   <footer id="adminPanel" hidden>
     <p>Mode créateur activé</p>
     <button class="btn" id="resetButton">Réinitialiser la progression</button>
   </footer>
-</main>
+</div>
 
-<div class="overlay" id="modalOverlay" role="dialog"
-     aria-modal="true" aria-labelledby="modalTitle">
+<div class="overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal">
     <button class="close" id="closeButton" aria-label="Fermer">&times;</button>
+    <div class="modal-kicker">Un nouveau chapitre t'attend</div>
     <h2 id="modalTitle">Jour 1</h2>
-
     <div class="locked-message" id="lockedMessage">
-      🔒 <p> ce n'est pas le bon jour petite curieuse...</p>
-      <p> Kairi le pipi surveille, ne triche pas !!! ✨</p>
+      <div class="locked-cat">🐈‍⬛ 🔒</div>
+      <p>Cette page est encore enchantée et scellée !</p>
+      <p>Kairi veille sur le grimoire : reviens le bon jour, petite curieuse… ✨</p>
     </div>
-
     <div id="puzzleArea">
       <div class="riddle" id="modalRiddle"></div>
       <form id="answerForm">
         <div class="input-group">
-          <input id="answerInput" type="text"
-                 placeholder="Ta réponse..." autocomplete="off"
-                 aria-label="Ta réponse" required>
-          <button class="btn" type="submit">Valider</button>
+          <input id="answerInput" type="text" placeholder="Écris ta réponse…" autocomplete="off" aria-label="Ta réponse" required>
+          <button class="btn" type="submit">Révéler ✨</button>
         </div>
       </form>
-      <p class="error" id="errorMsg" role="status">
-        Pas tout à fait beauté... Essaie encore ! 🗝️
-      </p>
+      <p class="error" id="errorMsg" role="status">Pas tout à fait, beauté… Tourne encore un peu les pages de ton imagination ! 🗝️</p>
     </div>
-
     <div class="gift" id="giftRevelation">
-      <h3>✨ Bravo, tu as trouvé ! ✨</h3>
+      <h3>✨ Bravo, lectrice de l'impossible ! ✨</h3>
       <div class="gift-emoji" id="giftEmoji"></div>
-      <p id="giftText">Voici l'indice de ton cadeau...</p>
+      <p id="giftText">Un indice magique t'attend…</p>
     </div>
   </div>
 </div>
 
 <script>
 "use strict";
-
-const defaultData = [
+  const defaultData = [
   {day:1, emoji:"🧟‍♂️", riddle:"Quel monstre légendaire entouré de bandelettes se réveille après des siècles de sommeil ?", answers:["momie"]},
   {day:2, emoji:"🧸", riddle:"Quel petit ourson célèbre adore le miel plus que tout au monde ?", answers:["winnie","winnie l'ourson"]},
   {day:3, emoji:"🐾", riddle:"Quel accessoire cylindrique Kairi adorerait traverser à toute vitesse ?", answers:["tunnel"]},
@@ -491,97 +241,73 @@ const defaultData = [
   {day:24, emoji:"🎨", riddle:"Périphérique informatique utilisé par les dessinateurs et artistes pour créer numériquement ?", answers:["tablette graphique"]}
 ];
 
-const TEST_MODE =
-  new URLSearchParams(window.location.search).get("test") === "1";
-
+const TEST_MODE = new URLSearchParams(window.location.search).get("test") === "1";
 const STORAGE_KEY = "advent_solved_v1";
 let activeDay = null;
 let previouslyFocused = null;
-
 const $ = id => document.getElementById(id);
 
 function normalize(value) {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
 function getSolvedState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    return saved && typeof saved === "object" ? saved : {};
-  } catch {
-    return {};
-  }
+    return saved && typeof saved === "object" && !Array.isArray(saved) ? saved : {};
+  } catch { return {}; }
 }
 
 function saveSolvedState(state) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    alert("La sauvegarde n'est pas disponible dans ce navigateur.");
-  }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch { alert("La sauvegarde n'est pas disponible dans ce navigateur."); }
 }
 
 function getCurrentAdventDay() {
   if (TEST_MODE) return 24;
-
   const now = new Date();
-  const month = now.getMonth(); 
-
-  if (month !== 11) return 0;
-
+  if (now.getMonth() !== 11) return 0;
   return Math.min(now.getDate(), 24);
 }
 
-function isUnlocked(day) {
-  return day <= getCurrentAdventDay();
+function isUnlocked(day) { return day <= getCurrentAdventDay(); }
+
+// Ordre mélangé mais stable : les cases ne changent pas de place au rafraîchissement.
+function shuffleArray(array) {
+  const result = [...array];
+  let seed = 241224;
+  for (let i = result.length - 1; i > 0; i--) {
+    seed = (seed * 16807) % 2147483647;
+    const j = seed % (i + 1);
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
 }
 
 function updateProgress() {
   const solved = getSolvedState();
   const count = defaultData.filter(item => solved[item.day]).length;
-
-  $("progressText").textContent =
-    `${count} cadeau${count > 1 ? "x" : ""} découvert${count > 1 ? "s" : ""} sur 24`;
-
+  $("progressText").textContent = `${count} surprise${count > 1 ? "s" : ""} découverte${count > 1 ? "s" : ""} sur 24`;
   $("progressFill").style.width = `${count / 24 * 100}%`;
-}
-
-// Fonction pour mélanger un tableau de manière fixe et aléatoire à chaque chargement
-function shuffleArray(array) {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    // Utilisation d'un ordre pseudo-aléatoire basé sur l'index pour mélanger les cases visuellement
-    const j = Math.floor(Math.sin(i * 999) * 10000) % (i + 1);
-    const positiveJ = Math.abs(j);
-    [shuffled[i], shuffled[positiveJ]] = [shuffled[positiveJ], shuffled[i]];
-  }
-  return shuffled;
 }
 
 function renderGrid() {
   const grid = $("calendarGrid");
   const solved = getSolvedState();
+  const today = getCurrentAdventDay();
   grid.replaceChildren();
 
-  // On mélange les cases ici pour qu'elles apparaissent dans le désordre sur la grille
-  const shuffledData = shuffleArray(defaultData);
-
-  shuffledData.forEach(item => {
+  shuffleArray(defaultData).forEach(item => {
     const unlocked = isUnlocked(item.day);
     const completed = Boolean(solved[item.day]);
-
     const card = document.createElement("button");
     card.type = "button";
     card.className = "card";
-    card.setAttribute("aria-label",
-      `Jour ${item.day}${completed ? ", énigme résolue" : unlocked ? "" : ", verrouillé"}`);
-
     if (completed) card.classList.add("solved");
+    if (today === item.day && unlocked && !completed) card.classList.add("today");
     card.disabled = !unlocked && !TEST_MODE;
+    card.setAttribute("aria-label", `Jour ${item.day}${completed ? ", énigme résolue" : unlocked ? "" : ", verrouillé"}`);
 
     const number = document.createElement("span");
     number.className = "card-number";
@@ -591,23 +317,29 @@ function renderGrid() {
     icon.className = "card-icon";
     icon.textContent = completed ? "✅" : unlocked ? "✨" : "🔒";
 
+    const art = document.createElement("span");
+    art.className = "card-art";
+    art.setAttribute("aria-hidden", "true");
+    art.textContent = completed ? "💖" : item.day % 4 === 0 ? "🐾" : item.day % 3 === 0 ? "✨" : item.day % 2 === 0 ? "📖" : "🏰";
+
     const label = document.createElement("span");
-    card.append(number, icon, label);
+    label.className = "card-label";
+    label.textContent = completed ? "Découvert" : unlocked ? "À ouvrir" : "Scellé";
+
+    card.append(number, icon, art, label);
     card.addEventListener("click", () => openModal(item));
     grid.appendChild(card);
   });
-
   updateProgress();
 }
 
 function openModal(item) {
   activeDay = item;
   previouslyFocused = document.activeElement;
-
   const solved = Boolean(getSolvedState()[item.day]);
   const unlocked = isUnlocked(item.day);
 
-  $("modalTitle").textContent = `Jour ${item.day}`;
+  $("modalTitle").textContent = `Chapitre ${item.day}`;
   $("errorMsg").style.display = "none";
   $("giftRevelation").style.display = "none";
   $("puzzleArea").style.display = "none";
@@ -618,8 +350,7 @@ function openModal(item) {
   } else if (solved) {
     $("giftRevelation").style.display = "block";
     $("giftEmoji").textContent = item.emoji;
-    $("giftText").textContent =
-      "Tu as déjà découvert cet indice. Ton cadeau t'attend ! ❤️";
+    $("giftText").textContent = "Tu as déjà découvert cet indice. Ta surprise t'attend… et Kairi n'a pas le droit d'y toucher ! ❤️";
   } else {
     $("puzzleArea").style.display = "block";
     $("modalRiddle").textContent = item.riddle;
@@ -627,18 +358,45 @@ function openModal(item) {
   }
 
   $("modalOverlay").classList.add("active");
-
-  if (unlocked && !solved) {
-    setTimeout(() => $("answerInput").focus(), 50);
-  } else {
-    $("closeButton").focus();
-  }
+  document.body.style.overflow = "hidden";
+  if (unlocked && !solved) setTimeout(() => $("answerInput").focus(), 50);
+  else $("closeButton").focus();
 }
 
 function closeModal() {
   $("modalOverlay").classList.remove("active");
-  if (previouslyFocused && typeof previouslyFocused.focus === "function") {
-    previouslyFocused.focus();
+  document.body.style.overflow = "";
+  if (previouslyFocused && typeof previouslyFocused.focus === "function") previouslyFocused.focus();
+}
+
+// Animation d'étincelles, de cœurs et de petites pattes autour de l'indice révélé.
+function launchMagicAnimation() {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const symbols = ["✦", "✧", "✨", "❋", "💖", "🐾"];
+  const colors = ["#f3d994", "#f3b7c8", "#fff7e9", "#9de0bc"];
+  const rect = $("giftRevelation").getBoundingClientRect();
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + Math.min(rect.height * .42, 120);
+
+  for (let i = 0; i < 30; i++) {
+    const spark = document.createElement("span");
+    spark.className = "magic-spark";
+    spark.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+    const angle = (Math.PI * 2 * i / 30) + (Math.random() * .25);
+    const distance = 65 + Math.random() * 150;
+
+    spark.style.setProperty("--x", `${originX}px`);
+    spark.style.setProperty("--y", `${originY}px`);
+    spark.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+    spark.style.setProperty("--dy", `${Math.sin(angle) * distance - 25}px`);
+    spark.style.setProperty("--size", `${12 + Math.random() * 18}px`);
+    spark.style.setProperty("--spin", `${Math.random() * 360}deg`);
+    spark.style.setProperty("--spark-color", colors[Math.floor(Math.random() * colors.length)]);
+
+    document.body.appendChild(spark);
+    spark.addEventListener("animationend", () => spark.remove(), { once: true });
   }
 }
 
@@ -647,9 +405,8 @@ function checkAnswer(event) {
   if (!activeDay || (!isUnlocked(activeDay.day) && !TEST_MODE)) return;
 
   const answer = normalize($("answerInput").value);
-  const accepted = activeDay.answers.map(normalize);
 
-  if (accepted.includes(answer)) {
+  if (answer && activeDay.answers.map(normalize).includes(answer)) {
     const solved = getSolvedState();
     solved[activeDay.day] = true;
     saveSolvedState(solved);
@@ -657,10 +414,14 @@ function checkAnswer(event) {
     $("errorMsg").style.display = "none";
     $("puzzleArea").style.display = "none";
     $("giftRevelation").style.display = "block";
-    $("giftEmoji").textContent = activeDay.emoji;
-    $("giftText").textContent =
-      "Voici l'indice de ton cadeau... À toi de découvrir ta surprise ! ❤️";
+    $("giftRevelation").classList.remove("reveal-celebration");
+    void $("giftRevelation").offsetWidth;
+    $("giftRevelation").classList.add("reveal-celebration");
 
+    $("giftEmoji").textContent = activeDay.emoji;
+    $("giftText").textContent = "Voici l'indice de ton cadeau… À toi de découvrir ta surprise ! ❤️";
+
+    launchMagicAnimation();
     renderGrid();
   } else {
     $("errorMsg").style.display = "block";
@@ -670,36 +431,5 @@ function checkAnswer(event) {
 
 function resetProgress() {
   if (!TEST_MODE) return;
-
   if (confirm("Réinitialiser toute la progression du calendrier ?")) {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch {}
-
-    closeModal();
-    renderGrid();
-  }
-}
-
-$("answerForm").addEventListener("submit", checkAnswer);
-$("closeButton").addEventListener("click", closeModal);
-
-$("modalOverlay").addEventListener("click", event => {
-  if (event.target === $("modalOverlay")) closeModal();
-});
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape" && $("modalOverlay").classList.contains("active")) {
-    closeModal();
-  }
-});
-
-if (TEST_MODE) {
-  $("adminPanel").hidden = false;
-  $("resetButton").addEventListener("click", resetProgress);
-}
-
-renderGrid();
-</script>
-</body>
-</html>
+    try { localStorage.removeItem(STORAGE_KEY);
