@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendrier de l'Avent Magique 🎄</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Calendrier de l'Avent pour ma Princesse 👑</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold-primary: #f39c12;
             --gold-light: #f1c40f;
-            --dark-blue: #0d1b2a;
-            --magic-purple: #2b1055;
-            --card-bg: rgba(255, 255, 255, 0.08);
-            --card-border: rgba(243, 156, 18, 0.4);
+            --gold-glow: #ffe066;
+            --royal-purple: #1a0b2e;
+            --deep-midnight: #0b0716;
+            --pink-accent: #ff85a2;
+            --card-border: rgba(241, 196, 15, 0.5);
             --text-light: #f8f9fa;
         }
 
@@ -23,7 +24,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 40%, #2b1055 100%);
+            background: radial-gradient(circle at top center, #2d124d 0%, #1a0b2e 50%, #0b0716 100%);
             color: var(--text-light);
             font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
@@ -41,527 +42,73 @@
             height: 100%;
             pointer-events: none;
             background: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
-                        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 40px 70px, #ffb7c5, rgba(0,0,0,0)),
                         radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
-                        radial-gradient(2px 2px at 160px 120px, #fff, rgba(0,0,0,0));
+                        radial-gradient(2px 2px at 160px 120px, #ffe066, rgba(0,0,0,0));
             background-repeat: repeat;
-            background-size: 200px 200px;
-            opacity: 0.3;
+            background-size: 250px 250px;
+            opacity: 0.4;
             z-index: 0;
+        }
+
+        /* Symboles flottants (Livres, KH Wayfinders, Cœurs, Couronnes) */
+        .floating-symbol {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.15;
+            z-index: 0;
+            animation: floatSlow 15s infinite ease-in-out;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
         }
 
         header {
             text-align: center;
-            padding: 40px 20px 20px 20px;
+            padding: 45px 20px 25px 20px;
             position: relative;
             z-index: 1;
         }
 
+        .princess-crown {
+            font-size: 2.8rem;
+            display: inline-block;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 0 10px rgba(241, 196, 15, 0.7));
+            animation: pulseCrown 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseCrown {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
         h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
+            font-family: 'Cinzel Decorative', 'Cinzel', serif;
+            font-size: 2.2rem;
             color: var(--gold-light);
-            text-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
-            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(241, 196, 15, 0.6), 0 0 5px #fff;
+            margin-bottom: 12px;
             letter-spacing: 2px;
+            line-height: 1.3;
+        }
+
+        @media (min-width: 768px) {
+            h1 { font-size: 3rem; }
         }
 
         p.subtitle {
             font-size: 1.05rem;
-            color: #d1d5db;
-            max-width: 600px;
-            margin: 0 auto 15px auto;
-            line-height: 1.5;
+            color: #e2e8f0;
+            max-width: 650px;
+            margin: 0 auto 18px auto;
+            line-height: 1.6;
+            font-weight: 300;
         }
 
         .kairi-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--gold-primary);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: #e2e8f0;
-            backdrop-filter: blur(5px);
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 18px;
-        }
-
-        @media (min-width: 768px) {
-            .grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
-        }
-
-        /* Cartes / Cases */
-        .card {
-            aspect-ratio: 1;
-            background: var(--card-bg);
-            border: 1.5px solid var(--card-border);
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            backdrop-filter: blur(8px);
-            user-select: none;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .card:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: var(--gold-light);
-            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.3);
-        }
-
-        .card.locked {
-            opacity: 0.6;
-            cursor: not-allowed;
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(15, 23, 42, 0.4);
-        }
-
-        .card.locked:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        .card.unlocked {
-            border-color: #2ecee0;
-            background: rgba(46, 206, 224, 0.12);
-        }
-
-        .card.solved {
-            border-color: #2ecc71;
-            background: rgba(46, 204, 113, 0.15);
-            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
-        }
-
-        .card-number {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--gold-light);
-        }
-
-        .card-status {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            font-size: 0.8rem;
-        }
-
-        /* Modale */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 10, 20, 0.85);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal {
-            background: linear-gradient(145deg, #1e1b4b 0%, #0f172a 100%);
-            border: 2px solid var(--gold-primary);
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(243, 156, 18, 0.2);
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal {
-            transform: scale(1);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .close-btn:hover {
-            color: #fff;
-        }
-
-        .modal-day-title {
-            font-family: 'Cinzel', serif;
-            color: var(--gold-light);
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .riddle-box {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 4px solid var(--gold-primary);
-            text-align: left;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--gold-light);
-        }
-
-        button.btn-submit {
-            background: linear-gradient(135deg, var(--gold-primary), #d35400);
-            border: none;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
-        }
-
-        button.btn-submit:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .gift-revelation {
-            margin-top: 20px;
-            padding: 25px;
-            background: rgba(46, 204, 113, 0.15);
-            border: 1px solid #2ecc71;
-            border-radius: 16px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .gift-revelation h3 {
-            color: #2ecc71;
-            margin-bottom: 12px;
-            font-size: 1.2rem;
-        }
-
-        .gift-emoji-display {
-            font-size: 4.5rem;
-            margin: 10px 0;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .error-msg {
-            color: #e74c3c;
-            font-size: 0.88rem;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Panneau Admin Secret */
-        .admin-panel {
-            margin-top: 50px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #94a3b8;
-        }
-
-        .admin-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn-admin {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .btn-admin:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="stars"></div>
-
-    <header>
-        <h1>Calendrier de l'Avent pour ma princesse </h1>
-        <p class="subtitle">Chaque jour, une énigme à résoudre pour débloquer l'indice de ton cadeau ✨</p>
-        <div class="kairi-badge">
-            🐾 <span>Gardé sous la haute surveillance de Kairi le pipi </span> 🌟
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="grid" id="calendarGrid"></div>
-
-        <!-- Panneau de test pour le créateur -->
-        <div class="admin-panel">
-            <p>⚙️ <strong>Mode Testeur (Créateur)</strong></p>
-            <div class="admin-controls">
-                <button class="btn-admin" onclick="unlockAllDays()">Débloquer toutes les dates</button>
-                <button class="btn-admin" onclick="resetProgress()">Réinitialiser la progression</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modale de Case -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h2 class="modal-day-title" id="modalTitle">Jour 1</h2>
-            
-            <div class="riddle-box" id="modalRiddle">
-                Chargement de l'énigme...
-            </div>
-
-            <div id="interactionArea">
-                <div class="input-group">
-                    <input type="text" id="answerInput" placeholder="Ta réponse..." autocomplete="off">
-                    <button class="btn-submit" onclick="checkAnswer()">Valider</button>
-                </div>
-                <div class="error-msg" id="errorMsg">Ce n'est pas tout à fait la bonne réponse... Réessaie ! 🗝️</div>
-            </div>
-
-            <div class="gift-revelation" id="giftRevelation" style="display: none;">
-                <h3>✨ Bravo ! Ton indice cadeau :</h3>
-                <div class="gift-emoji-display" id="giftEmoji">🧟‍♂️</div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const defaultData = [
-            { day: 1, emoji: "🧟‍♂️", riddle: "Énigme du 1er décembre : Quel monstre légendaire entouré de bandelettes se réveille après des siècles de sommeil ?", answer: "momie" },
-            { day: 2, emoji: "🧸", riddle: "Énigme du 2 décembre : Quel petit ourson célèbre adore le miel plus que tout au monde ?", answer: "winnie" },
-            { day: 3, emoji: "🐾", riddle: "Énigme du 3 décembre : Quel accessoire cylindrique Kairi adorerait traverser à toute vitesse ?", answer: "tunnel" },
-            { day: 4, emoji: "🥚", riddle: "Énigme du 4 décembre : Sur la table du petit-déjeuner, quel objet élégant maintient ton œuf à la coque debout ?", answer: "coquetier" },
-            { day: 5, emoji: "🗿", riddle: "Énigme du 5 décembre : Dans la mythologie maya, quel dieu géant de la montagne donne son nom à cette aventure Unlock ?", answer: "cabrakan" },
-            { day: 6, emoji: "🐈", riddle: "Énigme du 6 décembre : Objet mural indispensable pour voir passer les 12 mois de l'année en compagnie de félins ?", answer: "calendrier" },
-            { day: 7, emoji: "🔮", riddle: "Énigme du 7 décembre : Jeu de cartes mystique composé de 78 lames pour lire l'avenir et les arcanes...", answer: "tarot" },
-            { day: 8, emoji: "📑", riddle: "Énigme du 8 décembre : Soin beauté cocooning qu'on applique sur la peau pour un moment de détente absolue ?", answer: "masque" },
-            { day: 9, emoji: "♨️", riddle: "Énigme du 9 décembre : Accessoire tout chaud qu'on glisse sous la couette ou contre soi les soirs d'hiver ?", answer: "bouillotte" },
-            { day: 10, emoji: "💎", riddle: "Énigme du 10 décembre : Quel est le nom du légendaire diamant bleu rendu célèbre par le film Titanic ?", answer: "coeur de l'ocean" },
-            { day: 11, emoji: "🏎️", riddle: "Énigme du 11 décembre : Événement sportif mythique où rugissent les moteurs de voitures de course rétro ?", answer: "f1" },
-            { day: 12, emoji: "🗝️", riddle: "Énigme du 12 décembre : Dans quelle franchise de jeu vidéo Sora voyage-t-il avec Donald et Dingo munis d'une Keyblade ?", answer: "kingdom hearts" },
-            { day: 13, emoji: "💖", riddle: "Énigme du 13 décembre : Quel objet moelleux en forme de symbole d'amour viendra décorer le canapé ?", answer: "coussin" },
-            { day: 14, emoji: "🧥", riddle: "Énigme du 14 décembre : Vêtement géant hybride, ultra doux et chaud, parfait pour s'enrouler sur le canapé ?", answer: "sweat plaid" },
-            { day: 15, emoji: "🌊", riddle: "Énigme du 15 décembre : Comment appelle-t-il cette fine pluie de gouttelettes projetée par les vagues de la mer ?", answer: "embruns" },
-            { day: 16, emoji: "🥤", riddle: "Énigme du 16 décembre : Récipient écologique et réutilisable en matériau transparent pour s'hydrater partout ?", answer: "gourde" },
-            { day: 17, emoji: "🧩", riddle: "Énigme du 17 décembre : Jeu de patience consistant à assembler des centaines de petites pièces découpées ?", answer: "puzzle" },
-            { day: 18, emoji: "⚔️", riddle: "Énigme du 18 décembre : Comment traduit-on 'Le dernier homme' en anglais ?", answer: "last man" },
-            { day: 19, emoji: "☕", riddle: "Énigme du 19 décembre : Chez quel personnage féerique de Lewis Carroll prend-on le thé avec le Chapeautier Fou ?", answer: "alice" },
-            { day: 20, emoji: "🧗", riddle: "Énigme du 20 décembre : Terme qui désigne l'action de grimper tout en haut d'une montagne ?", answer: "ascension" },
-            { day: 21, emoji: "⛏️", riddle: "Énigme du 21 décembre : Objet lumineux inspiré du monde composé entièrement de blocs créatifs ?", answer: "minecraft" },
-            { day: 22, emoji: "📿", riddle: "Énigme du 22 décembre : Bijou qu'on porte au poignet, orné d'une lettre personnalisée ?", answer: "bracelet" },
-            { day: 23, emoji: "🕵️", riddle: "Énigme du 23 décembre : Mot anglais désignant des enquêtes pleines de secrets et de 'mystère' ?", answer: "mystery" },
-            { day: 24, emoji: "🎨", riddle: "Énigme du 24 décembre : Périphérique informatique utilisé par les dessinateurs et artistes pour créer numériquement ?", answer: "tablette graphique" }
-        ];
-
-        let activeDay = null;
-        let forceUnlockAll = false;
-
-        function getSolvedState() {
-            const saved = localStorage.getItem('advent_solved');
-            return saved ? JSON.parse(saved) : {};
-        }
-
-        function saveSolvedState(day) {
-            const state = getSolvedState();
-            state[day] = true;
-            localStorage.setItem('advent_solved', JSON.stringify(state));
-        }
-
-        function isDayAvailable(day) {
-            if (forceUnlockAll) return true;
-            const now = new Date();
-            const currentMonth = now.getMonth(); // 11 = Décembre
-            const currentDate = now.getDate();
-
-            if (currentMonth === 11) {
-                return day <= currentDate;
-            }
-            if (currentMonth > 11 || now.getFullYear() > 2026) {
-                return true;
-            }
-            return false;
-        }
-
-        function renderGrid() {
-            const grid = document.getElementById('calendarGrid');
-            grid.innerHTML = '';
-            const solvedState = getSolvedState();
-
-            defaultData.forEach(item => {
-                const card = document.createElement('div');
-                const available = isDayAvailable(item.day);
-                const solved = solvedState[item.day];
-
-                card.className = 'card';
-                if (!available) card.classList.add('locked');
-                if (solved) card.classList.add('solved');
-                else if (available) card.classList.add('unlocked');
-
-                card.innerHTML = `
-                    <div class="card-status">${solved ? '✅' : (available ? '🔓' : '🔒')}</div>
-                    <div class="card-number">${item.day}</div>
-                `;
-
-                card.onclick = () => openModal(item);
-                grid.appendChild(card);
-            });
-        }
-
-        function openModal(item) {
-            const available = isDayAvailable(item.day);
-            if (!available) {
-                alert(`🔒 Patiente encore un peu ! La case du ${item.day} décembre ne peut pas encore être ouverte.`);
-                return;
-            }
-
-            activeDay = item;
-            const solvedState = getSolvedState();
-            const isSolved = solvedState[item.day];
-
-            document.getElementById('modalTitle').innerText = `Jour ${item.day}`;
-            document.getElementById('modalRiddle').innerText = item.riddle;
-            document.getElementById('modalOverlay').classList.add('active');
-            document.getElementById('errorMsg').style.display = 'none';
-
-            const interactionArea = document.getElementById('interactionArea');
-            const giftArea = document.getElementById('giftRevelation');
-
-            if (isSolved) {
-                interactionArea.style.display = 'none';
-                giftArea.style.display = 'block';
-                document.getElementById('giftEmoji').innerText = item.emoji;
-            } else {
-                interactionArea.style.display = 'block';
-                giftArea.style.display = 'none';
-                document.getElementById('answerInput').value = '';
-                document.getElementById('answerInput').focus();
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').classList.remove('active');
-        }
-
-        function checkAnswer() {
-            if (!activeDay) return;
-            const input = document.getElementById('answerInput').value.trim().toLowerCase();
-            const expected = activeDay.answer.toLowerCase();
-
-            if (input.includes(expected) || expected.includes(input) && input.length >= 3) {
-                saveSolvedState(activeDay.day);
-                document.getElementById('interactionArea').style.display = 'none';
-                document.getElementById('giftRevelation').style.display = 'block';
-                document.getElementById('giftEmoji').innerText = activeDay.emoji;
-                renderGrid();
-            } else {
-                document.getElementById('errorMsg').style.display = 'block';
-            }
-        }
-
-        function unlockAllDays() {
-            forceUnlockAll = true;
-            renderGrid();
-            alert("✨ Mode Testeur : Toutes les cases sont désormais débloquées !");
-        }
-
-        function resetProgress() {
-            if (confirm("Réinitialiser toute la progression du calendrier ?")) {
-                localStorage.removeItem('advent_solved');
-                forceUnlockAll = false;
-                renderGrid();
-                alert("Progression réinitialisée.");
-            }
-        }
-
-        document.getElementById('answerInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                checkAnswer();
-            }
-        });
-
-        renderGrid();
-    </script>
-</body>
-</html>
+            gap: 10
